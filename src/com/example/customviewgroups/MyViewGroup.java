@@ -100,7 +100,7 @@ public class MyViewGroup extends ViewGroup {
       wspec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
           MeasureSpec.UNSPECIFIED);
     } else {
-      wspec = MeasureSpec.makeMeasureSpec(getMeasuredWidth() / getChildCount(),
+      wspec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
           MeasureSpec.UNSPECIFIED);
     }
     int hspec = MeasureSpec.makeMeasureSpec(getMeasuredHeight(),
@@ -125,9 +125,12 @@ public class MyViewGroup extends ViewGroup {
       // v.layout(itemWidth*i, t, (i+1)*itemWidth, b);
       // v.layout(itemWidth*i, t, v.getMeasuredWidth() + itemWidth*i,
       // t+v.getMeasuredHeight());
-      int coord = 200 * (i + 1);
-      v.layout(coord, coord, v.getMeasuredWidth() + coord,
-          v.getMeasuredHeight() + coord);
+      this.adjustTranslationForBounds();
+      int coord = (int) ((200 * (i + 1)) * scaleFactor);
+      int coordX = (int) ((coord + translateX) );
+      int coordY = (int) ((coord + translateY) );
+      v.layout(coordX, coordY, v.getMeasuredWidth() + coordX,
+          v.getMeasuredHeight() + coordY);
     }
 
   }
@@ -193,6 +196,7 @@ public class MyViewGroup extends ViewGroup {
     // Only redraw if zooming or dragging and zoomed-in
     // if ((mode == DRAG && scaleFactor != 1f && dragged) || mode == ZOOM) {
     if ((mode == DRAG && dragged) || mode == ZOOM) {
+      this.requestLayout();
       invalidate();
     }
 
@@ -206,7 +210,23 @@ public class MyViewGroup extends ViewGroup {
     canvas.save();
 
     canvas.scale(scaleFactor, scaleFactor);
+    
+    this.adjustTranslationForBounds();
 
+    // The translation amount also gets scaled according to how much
+    // we've zoomed into the canvas.
+    canvas.translate(translateX / scaleFactor, translateY / scaleFactor);
+
+    /* put the canvas drawing code here: */
+
+    doCanvasPaint(canvas);
+
+    /* end of drawing code */
+
+    canvas.restore();
+  }
+  
+  private void adjustTranslationForBounds() {
     // these appear to be scaled values:
     int width = getWidth();
     int height = getHeight();
@@ -232,18 +252,6 @@ public class MyViewGroup extends ViewGroup {
     if (translateY > 0) {
       translateY = 0;
     }
-
-    // The translation amount also gets scaled according to how much
-    // we've zoomed into the canvas.
-    canvas.translate(translateX / scaleFactor, translateY / scaleFactor);
-
-    /* put the canvas drawing code here: */
-
-    doCanvasPaint(canvas);
-
-    /* end of drawing code */
-
-    canvas.restore();
   }
   
   public void doCanvasPaint(Canvas canvas) {
