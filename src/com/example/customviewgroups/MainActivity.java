@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
         LayoutParams.WRAP_CONTENT));
     //b1.setWidth(100);
     //b1.setHeight(50);
-    b1.setId(4444);
+    //b1.setId(4444);
     Button b2 = new Button(this);
     b2.setText("test2");
     //b2.setWidth(100);
@@ -31,10 +31,10 @@ public class MainActivity extends Activity {
     b2.setLayoutParams(new LayoutParams(
         LayoutParams.WRAP_CONTENT,
         LayoutParams.WRAP_CONTENT));
-    b2.setId(5555);
+    //b2.setId(5555);
     pv.addView(b1);
     pv.addView(b2);
-    pv.invalidate();
+    //pv.invalidate();
   }
 
   @Override
