@@ -92,26 +92,7 @@ public class MyViewGroup extends ViewGroup {
 
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-    int childCount = getChildCount();
-    int wspec = 0;
-    if (childCount == 0) {
-      wspec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
-          MeasureSpec.UNSPECIFIED);
-    } else {
-      wspec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
-          MeasureSpec.UNSPECIFIED);
-    }
-    int hspec = MeasureSpec.makeMeasureSpec(getMeasuredHeight(),
-        MeasureSpec.UNSPECIFIED);
-
     measureChildren(widthMeasureSpec, heightMeasureSpec);
-    //for (int i = 0; i < getChildCount(); i++) {
-    //  View v = getChildAt(i);
-    //  Log.d(TAG, "Measured Width / Height: " + getMeasuredWidth() + ", "
-    //      + getMeasuredHeight());
-
-    //  v.measure(wspec, hspec);
-    //}
   }
 
   @Override
@@ -120,9 +101,6 @@ public class MyViewGroup extends ViewGroup {
     int itemWidth = (childCount == 0) ? r - l : (r - l) / childCount;
     for (int i = 0; i < childCount; i++) {
       View v = getChildAt(i);
-      // v.layout(itemWidth*i, t, (i+1)*itemWidth, b);
-      // v.layout(itemWidth*i, t, v.getMeasuredWidth() + itemWidth*i,
-      // t+v.getMeasuredHeight());
       this.adjustTranslationForBounds();
       int coord = (int) ((200 * (i + 1)) * scaleFactor);
       int coordX = (int) ((coord + translateX) );

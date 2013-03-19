@@ -57,7 +57,7 @@ public class MyView extends View {
     rectPaint.setStyle(Style.FILL);
     rectPaint.setColor(Color.YELLOW);
     
-    textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    textPaint = new Paint();
     textPaint.setColor(Color.BLACK);
     textPaint.setStyle(Style.STROKE);
     textPaint.setTextSize(20);
@@ -77,7 +77,6 @@ public class MyView extends View {
     canvas.drawRoundRect(rect, 8, 8, rectPaint);
     canvas.drawText(text, 5, 25, textPaint);
     
-
     canvas.restore();
   }
   
