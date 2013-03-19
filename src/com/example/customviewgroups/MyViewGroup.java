@@ -194,6 +194,16 @@ public class MyViewGroup extends ViewGroup {
     // Only redraw if zooming or dragging and zoomed-in
     // if ((mode == DRAG && scaleFactor != 1f && dragged) || mode == ZOOM) {
     if ((mode == DRAG && dragged) || mode == ZOOM) {
+      for (int i = 0; i < getChildCount(); i++) {
+        View v = getChildAt(i);
+        if (v instanceof MyView) {
+          ((MyView)v).setScaleFactor(scaleFactor);
+          // we need to requestLayout on the child so it gets re-measured AND redrawn.
+          // Otherwise it will just be invalidated and redrawn in its old size
+          v.requestLayout();
+        }
+
+      }
       this.requestLayout();
       invalidate();
     }
