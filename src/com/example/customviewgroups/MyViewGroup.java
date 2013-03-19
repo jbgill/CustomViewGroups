@@ -5,14 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 
 public class MyViewGroup extends ViewGroup {
-  private static final String TAG = "CustomLayout";
 
   // the minimum and maximum zoom
   private float minZoom = .5f;
